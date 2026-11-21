@@ -72,7 +72,7 @@ class Bulkhead:
         # Skip waiters whose tenant is at its limit so they cannot block others.
         for waiter in sorted(self._waiters, key=lambda w: w.key):
             if self._in_flight >= self.max_concurrent:
-                return
+                break
             if self._per_tenant.get(waiter.tenant, 0) >= self.tenant_limit:
                 continue
             self._waiters.remove(waiter)
